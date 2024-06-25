@@ -1,0 +1,200 @@
+/* Reset default margin and padding */
+body,
+html {
+    margin: 0;
+    padding: 0;
+}
+
+/* Full viewport height for body */
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Container for map and sidebar */
+#container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    /* Prevents sidebar from expanding beyond container */
+}
+
+/* Sidebar style */
+#sidebar {
+    width: 25%;
+    /* Adjust width as needed */
+    min-width: 250px;
+    /* Ensure sidebar is at least 250px wide */
+    padding: 10px;
+    background-color: #f0f0f0;
+    overflow-y: auto;
+    /* Enable scrolling if content exceeds height */
+    height: 100%;
+    /* Occupy full height of container */
+}
+
+/* Controls style */
+#controls {
+    margin-bottom: 10px;
+}
+
+/* Input and button style */
+#routeIDInput {
+    padding: 5px;
+    font-size: 14px;
+    width: 90%;
+    margin-right: 10px;
+    text-align: center;
+}
+
+button {
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Sidebar heading style */
+h2 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+/* Styling for stop items in the sidebar */
+#stopList .stop-item:nth-child(even) {
+    background-color: #f0f0f0;
+    /* Light grey background for even options */
+}
+
+#stopList .stop-item:nth-child(odd) {
+    background-color: #ffffff;
+    /* White background for odd options */
+}
+
+.stop-item {
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    transition: background-color 0.3s ease;
+}
+
+.stop-item:hover {
+    background-color: #d0d0d0;
+}
+
+.custompopup {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding: 10px;
+}
+
+.custompopup .stopname {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.custompopup .eta {
+    color: #e99713;
+}
+
+.custompopup .etalabel {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* Map container style */
+#map-container {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    /* Occupy full height of container */
+}
+
+/* Map style */
+#map {
+    height: 100%;
+    /* Occupy full height of container */
+    width: 100%;
+}
+
+/* Radio buttons style */
+#boundFilters {
+    margin-bottom: 10px;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Responsive design */
+
+/* Small screens (e.g., smartphones) */
+@media only screen and (max-width: 768px) {
+    #container {
+        flex-direction: column;
+    }
+
+    #sidebar {
+        width: 100%;
+        min-width: auto;
+    }
+
+    #routeIDInput {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+/* Medium to large screens */
+@media only screen and (min-width: 769px) {
+    #sidebar {
+        width: 25%;
+    }
+}
+
+#darkBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent dark background */
+    z-index: 1000;
+    /* Ensures it covers everything */
+    display: none;
+    /* Initially hidden */
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    /* White background */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    /* Shadow for depth */
+    z-index: 3000;
+    /* Ensures it appears above everything */
+    max-width: 80%;
+    /* Adjust width as needed */
+    max-height: 80%;
+    /* Adjust height as needed */
+    overflow-y: auto;
+    /* Enable scrolling if content exceeds height */
+}
