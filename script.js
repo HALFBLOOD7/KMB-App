@@ -108,7 +108,7 @@ function showRouteStops() {
         .bindTooltip("Loading ETA...");
 
       // Fetch ETA on click
-      marker.on("click", async function () {
+      marker.on("onmouse", async function () {
         const eta = await fetchETA(routeID, stop.id);
 
         let tempVar = "";
