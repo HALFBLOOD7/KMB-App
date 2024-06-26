@@ -198,3 +198,22 @@ input[type="radio"] {
     overflow-y: auto;
     /* Enable scrolling if content exceeds height */
 }
+
+
+.blink {
+    animation: blink 0.2s 3;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
