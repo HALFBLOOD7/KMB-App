@@ -105,10 +105,10 @@ function showRouteStops() {
     if (stop) {
       const marker = L.marker([stop.lat, stop.long])
         .addTo(map)
-        .bindTooltip("Loading ETA...");
+        .bindTooltip(stop.name + "\nloading ETA....");
 
       // Fetch ETA on click
-      marker.on("mouseover", async function () {
+      marker.on("click", async function () {
         const eta = await fetchETA(routeID, stop.id);
 
         let tempVar = "";
@@ -130,7 +130,7 @@ function showRouteStops() {
       markers.push(marker);
 
       // Add stop to sidebar
-      addStopToSidebar(stop);
+      addStopToSidebar(stop, marker);
     }
   });
 
@@ -144,16 +144,21 @@ function showRouteStops() {
     map
   );
   polylines.push(polyline);
+  map.panTo([
+    getStopByID(routeStops[0].stopID).lat,
+    getStopByID(routeStops[0].stopID).long,
+  ]);
 }
 
 // Function to add a stop to the sidebar
-function addStopToSidebar(stop) {
+function addStopToSidebar(stop, marker) {
   const stopListContainer = document.getElementById("stopList");
   const stopItem = document.createElement("div");
   stopItem.classList.add("stop-item");
   stopItem.textContent = stop.name;
 
-  if (isMobileView) {
+  //isMobileView
+  if (window.innerWidth < 768) {
     stopItem.addEventListener("click", async function () {
       // Create popup element
       const popup = document.createElement("div");
@@ -192,7 +197,37 @@ function addStopToSidebar(stop) {
     });
   } else {
     stopItem.addEventListener("click", () => {
-      map.setView([stop.lat, stop.long], 17);
+      console.log(`panning to ${stop.name}`);
+      map.setView([stop.lat, stop.long], 17, { animate: true });
+
+      // Change the marker's color to red to make it visually contrasting
+      marker.setIcon(
+        new L.Icon({
+          iconUrl:
+            "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+          shadowUrl:
+            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          tooltipAnchor: [16, -28],
+          shadowSize: [41, 41],
+        })
+      );
+      // Add vibrating animation to the clicked marker after a short delay
+      marker.getElement().classList.add("blink");
+
+      // Remove the blink class to stop the animation
+      setTimeout(() => {
+        marker.getElement().classList.remove("blink");
+      }, 600);
+
+      // Optionally, reset other markers' icons to the default blue one
+      markers.forEach((m) => {
+        if (m !== marker) {
+          m.setIcon(new L.Icon.Default());
+        }
+      });
     });
   }
 
